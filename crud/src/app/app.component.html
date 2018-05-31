@@ -1,0 +1,124 @@
+<form data-toggle="validator" [formGroup]="Group">
+  <div>
+    <div>
+      <label>Name :</label>
+      <input type="text" class="form-control" formControlName="name" required #name>
+    </div>
+    <div>
+      <label>Keys :</label>
+      <input type="text" class="form-control" formControlName="keys" #keys>
+    </div>
+    <br>
+    <div>
+      <label>Child :</label>
+      <button class="btn btn-primary" (click)="clear()">Clear</button>
+      <ng-multiselect-dropdown *ngIf="cities.length>0" 
+        [placeholder]="Child" 
+        [data]="cities" 
+        [(ngModel)]="selectedItems" 
+        [ngModelOptions]="{standalone: true}"
+        [settings]="dropdownSettings">
+      </ng-multiselect-dropdown>
+    </div>
+    <br>
+    <div>
+      <button class="btn btn-primary" (click)="save()">Save</button>
+      <button class="btn btn-primary" value="update" *ngIf="flag" (click)="update()">Update</button>
+    </div>
+  </div>
+  <br>
+  <br>
+
+  <!-- <Display table> -->
+  <h2>User Table</h2>
+  <div class="container">
+    <div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>SR NO</th>
+            <th>Name</th>
+            <th>Keys</th>
+            <th>Child</th>
+            <th>Creade Date</th>
+            <th>Update Date</th>
+            <th class="text-center">Action</th>
+          </tr>
+        </thead>
+        <tr *ngFor="let obj of object; let i=index">
+          <td>{{i+1}}</td>
+          <td>{{obj.name}}</td>
+          <td>{{obj.keys}}</td>
+          <td>
+            <span *ngFor="let city of obj.cities; let i=index">
+              {{city.item_text}}
+            </span>
+          </td>
+          <td>{{obj.date}}</td>
+          <td>{{obj.date}}</td>
+          <td class="text-center">
+            <button (click)="delete(obj._id)" class="btn">
+              <i class="fa fa-trash"></i>
+            </button>
+            <button (click)="edit(obj.name, obj.keys, obj._id)" class="btn">
+              <i class="fa fa-edit"></i>
+            </button>
+            <button (click)="view(obj.cities)" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">
+              <i class="fa fa-eye"></i>
+            </button>
+          </td>
+        </tr>
+        <tr>
+
+      </table>
+
+      <!-- <Display model window> -->
+      <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Information</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+
+                  <tr>
+                    <th>SR NO</th>
+                    <th>Name</th>
+                    <th>Keys</th>
+                    <th>Child</th>
+                    <th>Creade Date</th>
+                    <th>Update Date</th>
+                  </tr>
+                </thead>
+                <tr *ngFor="let obj of viewdata; let i=index">
+                  <td>{{i+1}}</td>
+                  <td>{{obj.name}}</td>
+                  <td>{{obj.keys}}</td>
+                  <td>
+                    <span *ngFor="let city of obj.cities; let i=index">
+                      {{city.item_text}}
+                    </span>
+                  </td>
+                  <td>{{obj.date}}</td>
+                  <td>{{obj.date}}</td>
+                </tr>
+                <tr>
+
+              </table>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</form>
